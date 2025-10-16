@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Salud Ocupacional</title>
+  <link rel="stylesheet" href="./styles.css?v=1">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><img id="app-logo" src="./assets/logo-achs.png" alt="achs servicios"/><span>Salud Ocupacional</span></div>
+    <div class="status-wrap">
+      <span id="status-chip" class="chip chip-muted">Calculando…</span>
+    </div>
+    <nav id="nav">
+      <button id="btn-login" class="btn outline">Ingresar</button>
+      <button id="btn-logout" class="btn outline hidden">Salir</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section id="view-login" class="card" style="max-width:560px;margin:auto;">
+      <h2>Ingreso</h2>
+      <form id="login-form" class="col" style="gap:8px">
+        <input class="input" type="email" id="email" placeholder="tu@empresa.cl" required>
+        <input class="input" type="password" id="password" placeholder="Clave" required>
+        <button class="btn primary" type="submit">Entrar</button>
+        <div id="login-msg" class="muted hidden"></div>
+      </form>
+    </section>
+
+    <section id="view-app" class="hidden">
+      <div class="tabs">
+        <button class="tab" data-tab="perfil">Perfil</button>
+        <button class="tab" data-tab="laboratorio">Laboratorio</button>
+        <button class="tab" data-tab="higiene">Higiene</button>
+        <button class="tab" data-tab="externo">Portal</button>
+        <button class="tab" data-tab="citaciones">Próximas citaciones</button>
+        <button class="tab" data-tab="recomendaciones">Recomendaciones</button>
+        <button class="tab tab-salud hidden" data-tab="dashboard">Dashboard Salud</button>
+        <button class="tab tab-salud hidden" data-tab="supervisor">Supervisor</button>
+      </div>
+
+      <section id="tab-perfil" class="tabview active">
+        <div id="top-alert" class="alert-banner"></div>
+        <div class="grid">
+          <div class="card">
+            <h2>Mi Perfil</h2>
+            <div id="perfil"><span class="muted">Cargando…</span></div>
+            <div id="kpis" class="kpis"></div>
+          </div>
+          <div class="card">
+            <h2>Mis Alertas</h2>
+            <div id="alertas" class="list"><span class="muted">Cargando…</span></div>
+          </div>
+          <div class="card wide">
+            <div class="row between">
+              <h2>Resultados de Laboratorio</h2>
+              <input id="filtro-labs" class="input" placeholder="Filtrar…">
+            </div>
+            <table class="table" id="labs">
+              <thead><tr><th>Tipo</th><th>Parámetro</th><th>Fecha</th><th>Resultado</th><th>Ref.</th><th>Int.</th></tr></thead>
+              <tbody><tr><td colspan="6" class="muted">—</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-laboratorio" class="tabview">
+        <div class="card wide">
+          <div class="row between">
+            <h2>Resultados de Laboratorio</h2>
+            <input id="filtro-labs-2" class="input" placeholder="Filtrar…">
+          </div>
+          <table class="table" id="labs-2">
+            <thead><tr><th>Tipo</th><th>Parámetro</th><th>Fecha</th><th>Resultado</th><th>Ref.</th><th>Int.</th></tr></thead>
+            <tbody><tr><td colspan="6" class="muted">—</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="tab-higiene" class="tabview">
+        <div class="card wide">
+          <h2>Higiene ocupacional</h2>
+          <table class="table" id="hig">
+            <thead><tr><th>Agente</th><th>GES</th><th>Fecha</th><th>Valor</th><th>OEL</th><th>Nivel</th></tr></thead>
+            <tbody><tr><td colspan="6" class="muted">—</td></tr></tbody>
+          </table>
+          <div id="hig-msg" class="muted mt8"></div>
+        </div>
+      </section>
+
+      <section id="tab-externo" class="tabview">
+        <div class="card">
+          <h2>Portal externo</h2>
+          <iframe id="iframe-externo" style="width:100%;height:520px;border:1px solid #e5e7eb;border-radius:12px"></iframe>
+        </div>
+      </section>
+
+      <section id="tab-citaciones" class="tabview">
+        <div class="card">
+          <h2>Próximas citaciones</h2>
+          <table class="table" id="cit">
+            <thead><tr><th>Fecha</th><th>Hora</th><th>Tipo</th><th>Centro</th><th>Dirección</th><th>Estado</th></tr></thead>
+            <tbody><tr><td colspan="6" class="muted">—</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="tab-recomendaciones" class="tabview">
+        <div class="card">
+          <div class="row between"><h2>Recomendaciones globales <span class="tag">PDF/Imágenes</span></h2>
+            <div class="row" style="gap:8px">
+              <input id="file-upload" type="file" accept="application/pdf,image/*" multiple class="input">
+              <button id="btn-upload" class="btn primary">Subir</button>
+            </div>
+          </div>
+          <div class="mt8"><iframe id="global-pdf" title="Recomendaciones Globales"></iframe></div>
+          <div class="mt8"><h3>Imágenes globales</h3><div id="img-gallery" class="gallery"></div></div>
+          <div id="file-msg" class="muted mt8"></div>
+        </div>
+        <div class="card wide">
+          <h2>Recomendaciones personalizadas</h2>
+          <div id="reco-cards"><span class="muted">Sin recomendaciones.</span></div>
+        </div>
+      </section>
+
+      <section id="tab-dashboard" class="tabview tab-salud hidden">
+        <div class="card wide">
+          <h2>Dashboard Salud</h2>
+          <div id="dash-msg" class="muted">Cárgalo cuando tengas resúmenes creados.</div>
+        </div>
+      </section>
+
+      <section id="tab-supervisor" class="tabview tab-salud hidden">
+        <div class="card">
+          <h2>Supervisor – Buscar trabajador</h2>
+          <div class="row" style="gap:8px;align-items:flex-end">
+            <div style="flex:1">
+              <label class="muted">Nombre, email o RUT</label>
+              <input id="srch" class="input" placeholder="Ej: Juan, @empresa.cl o 16.XXX.XXX-X">
+            </div>
+            <button id="btn-clear" class="btn outline">Limpiar</button>
+          </div>
+          <div id="srch-results" class="list mt8"></div>
+        </div>
+
+        <div class="grid" id="sup-detail" style="display:none">
+          <div class="card">
+            <h3>Perfil</h3>
+            <div id="sup-perfil" class="muted">—</div>
+            <div id="sup-kpis" class="kpis mt8"></div>
+          </div>
+          <div class="card">
+            <h3>Citaciones</h3>
+            <table class="table" id="sup-cit">
+              <thead><tr><th>Fecha</th><th>Hora</th><th>Tipo</th><th>Centro</th><th>Dirección</th><th>Estado</th></tr></thead>
+              <tbody><tr><td colspan="6" class="muted">—</td></tr></tbody>
+            </table>
+          </div>
+          <div class="card wide">
+            <div class="row between"><h3>Laboratorio</h3><input id="sup-filtro-labs" class="input" placeholder="Filtrar…"></div>
+            <table class="table" id="sup-labs">
+              <thead><tr><th>Tipo</th><th>Parámetro</th><th>Fecha</th><th>Resultado</th><th>Ref.</th><th>Int.</th></tr></thead>
+              <tbody><tr><td colspan="6" class="muted">—</td></tr></tbody>
+            </table>
+          </div>
+          <div class="card wide">
+            <h3>Higiene ocupacional</h3>
+            <table class="table" id="sup-hig">
+              <thead><tr><th>Agente</th><th>GES</th><th>Fecha</th><th>Valor</th><th>OEL</th><th>Nivel</th></tr></thead>
+              <tbody><tr><td colspan="6" class="muted">—</td></tr></tbody>
+            </table>
+            <div id="sup-hig-msg" class="muted mt8"></div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <small class="muted">Demo — Supabase + JS (CDN). Seguridad por RLS.</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="./config.js?v=1"></script>
+  <script type="module" src="./app.js?v=1"></script>
+</body>
+</html>
